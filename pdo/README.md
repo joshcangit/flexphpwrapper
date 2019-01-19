@@ -1,6 +1,6 @@
-# Object Oriented PDO Connection
+# Classless PDO Connection
 
-Object oriented PDO connection with multiple ways of performing queries.
+Classless PDO connection with multiple ways of performing queries.
 
 ## Introduction
 
@@ -21,24 +21,23 @@ Even so, [supported PHP versions](https://secure.php.net/supported-versions.php)
 ```php
 <?php
 require_once 'db.php';
-$db = new DB;
 
 // using a named parameter and showing single value
-$stmt = $db->pdo->prepare("SELECT * FROM users WHERE name=:name");
+$stmt = $pdo->prepare("SELECT * FROM users WHERE name=:name");
 $stmt->execute([ 'name' => $name ]);
 $user = $stmt->fetch();
 $stmt = null;
 echo $user['name'];
 
 // using a positional parameter and showing single value
-$stmt = $db->pdo->prepare("SELECT * FROM users WHERE name=?");
+$stmt = $pdo->prepare("SELECT * FROM users WHERE name=?");
 $stmt->execute([$name]);
 $user = $stmt->fetch();
 $stmt = null;
 echo $user['name'];
 
 // without variables and getting multiple rows
-$result = $db->pdo->query("SELECT * FROM users ORDER BY id ASC");
+$result = $pdo->query("SELECT * FROM users ORDER BY id ASC");
 while ($row=$result->fetch()) {
     $users[] = $row;
 }
@@ -46,7 +45,7 @@ $result = null;
 print_r($users);
 
 //insert using named parameters with getting insert id
-$stmt = $db->pdo->prepare("INSERT INTO users(name, contact, email) VALUES (:name, :contact, :email)");
+$stmt = $pdo->prepare("INSERT INTO users(name, contact, email) VALUES (:name, :contact, :email)");
 $array = [
     'email' => $email,
     'name' => $name,
@@ -57,7 +56,7 @@ echo $stmt->lastInsertId;
 $stmt = null;
 
 //insert using positional parameters with getting insert id
-$stmt = $db->pdo->prepare("INSERT INTO users(name, contact, email) VALUES (?, ?, ?)");
+$stmt = $pdo->prepare("INSERT INTO users(name, contact, email) VALUES (?, ?, ?)");
 $array = [$name, $contact, $email];
 $stmt->execute($array);
 echo $stmt->lastInsertId;
@@ -80,58 +79,32 @@ $stmt = null;
 >
 > Also unlike **MySQLi**, **PDO** it has a default fetch mode on connection, which is the *fetch associative array* mode in this case. It also has different functions for fetching data. Refer to [this guide on fetch modes](https://phpdelusions.net/pdo/fetch_modes) and [The PDOStatement class of the PHP documentation](https://secure.php.net/manual/en/class.pdostatement.php) for more information.
 
-### Creating another class file called "*user.php*"
-
-```php
-<?php
-class User extends DB {
-    function signup($name, $contact, $email) {
-        //insert with getting insert id
-        $stmt = $this->pdo->prepare("INSERT INTO users(name, contact, email) VALUES (?, ?, ?)");
-        $stmt->execute();
-        return $stmt->insert_id;
-        $stmt->close();
-    }
-```
-
-> **Note:** Other than `$this->pdo`, using `$this->connect()` also works since **protected** functions and variables can be used inside other functions whether in the same class or extended. Refer to [this documentation](https://secure.php.net/manual/en/language.oop5.visibility.php) for more information.
-
-#### In other PHP files:
-
-```php
-<?php
-require_once 'db.php'
-require_once 'user.php'
-$inst = new User;
-//Function call
-$new_user = signup($name, $contact, $email);
-echo $new_user;
-```
-
-> **Note:** Here, you have to include **both** files for this to work. This method is used to put other functions outside of the shared **db.php** class file.
-
 ### Using the provided `pdo()` function
 
 ```php
 <?php
 require_once 'db.php';
-$db = new DB;
 
 // using a named parameter and showing single value
-$user = $db->pdo("SELECT * FROM users WHERE name=:name", [ 'name' => $name ])->fetch();
+$stmt = pdo($pdo, "SELECT * FROM users WHERE name=:name", [ 'name' => $name ]);
+$user = $stmt->fetch();
+$stmt = null;
 echo $user['name'];
 
 // with named parameters with binding and 1 row returned
-$user = $db->pdo("SELECT * FROM users WHERE name=? OR email=?", [$name, $email], true)->fetch();
+$stmt = pdo($pdo, "SELECT * FROM users WHERE name=? OR email=?", [$name, $email], true);
+$user = $stmt->fetch();
+$stmt = null;
 print_r($user);
-$user = null;
 
 // using a positional parameter and showing single value
-$user = $db->pdo("SELECT * FROM users WHERE name=?", [$name])->fetch();
+$stmt = pdo($pdo, "SELECT * FROM users WHERE name=?", [$name]);
+$user = $stmt->fetch();
+$stmt = null;
 echo $user['name'];
 
 // without variables and getting multiple rows
-$result = $db->pdo("SELECT * FROM users ORDER BY id ASC");
+$result = pdo($pdo, "SELECT * FROM users ORDER BY id ASC");
 while ($row=$result->fetch()) {
     $users[] = $row;
 }
@@ -144,17 +117,17 @@ $array = [
     'name' => $name,
     'contact' => $contact
 ];
-$stmt = $db->pdo("INSERT INTO users(name, contact, email) VALUES (:name, :contact, :email)", $array);
+$stmt = pdo($pdo, "INSERT INTO users(name, contact, email) VALUES (:name, :contact, :email)", $array);
 echo $stmt->lastInsertId;
 $stmt = null;
 
 //insert using positional parameters with getting insert id
-$stmt = $db->pdo("INSERT INTO users(name, contact, email) VALUES (?, ?, ?)", [$name, $contact, $email]);
+$stmt = pdo($pdo, "INSERT INTO users(name, contact, email) VALUES (?, ?, ?)", [$name, $contact, $email]);
 echo $stmt->lastInsertId;
 $stmt = null;
 
 //insert using positional parameters with binding and getting insert id
-$stmt = $db->pdo("INSERT INTO users(name, contact, email) VALUES (?, ?, ?)", [$name, $contact, $email], [PDO::PARAM_STR,PDO::PARAM_INT,PDO::PARAM_STR]);
+$stmt = pdo($pdo, "INSERT INTO users(name, contact, email) VALUES (?, ?, ?)", [$name, $contact, $email], [PDO::PARAM_STR,PDO::PARAM_INT,PDO::PARAM_STR]);
 echo $stmt->lastInsertId;
 $stmt = null;
 ```
@@ -174,8 +147,8 @@ $stmt = null;
 ##### Before PHP 5.4
 
 ```php
-//insert using positional parameters with getting insert id
-$stmt = $db->pdo("INSERT INTO customers(name, contact, email) VALUES (?, ?, ?)", array($name, $contact, $email);
+//insert using positional parameters with binding and getting insert id
+$stmt = pdo($pdo, "INSERT INTO users(name, contact, email) VALUES (?, ?, ?)", array($name, $contact, $email), array(PDO::PARAM_STR,PDO::PARAM_INT,PDO::PARAM_STR));
 echo $stmt->lastInsertId;
 $stmt = null;
 ```

@@ -1,6 +1,6 @@
-# Object Oriented MySQLi Connection
+# Classless MySQLi Connection
 
-Object oriented MySQLi connection with multiple ways of performing queries.
+Classless MySQLi connection with multiple ways of performing queries.
 
 ## Introduction
 
@@ -14,20 +14,25 @@ Although this code *should* function in earlier versions of PHP, it is recommend
 
 ### Basic query examples
 
+#### Start
+
 ```php
 <?php
 require_once 'db.php';
-$db = new DB;
+```
 
+#### Object oriented style
+
+```php
 // with a variables and showing single value
-$stmt = $db->mysqli->prepare("SELECT * FROM users WHERE name='$name'");
+$stmt = $mysqli->prepare("SELECT * FROM users WHERE name='$name'");
 $stmt->execute();
 $user = $stmt->get_result()->fetch_assoc();
 $stmt->close();
 echo $user['name'];
 
 // without variables and getting multiple rows
-$result = $db->mysqli->query("SELECT * FROM users ORDER BY id ASC");
+$result = $mysqli->query("SELECT * FROM users ORDER BY id ASC");
 while ($row=$result->fetch_assoc()) {
     $users[] = $row;
 }
@@ -35,37 +40,26 @@ $result->close();
 print_r($users);
 ```
 
+#### Procedural style
+
+```php
+// with a variables and showing single value
+$stmt = mysqli_prepare($mysqli, "SELECT * FROM users WHERE name='$name'");
+mysqli_stmt_execute($stmt);
+$user = mysqli_fetch_assoc(mysqli_stmt_get_result($stmt));
+mysqli_stmt_close($stmt);
+echo $user['name'];
+
+// without variables and getting multiple rows
+$result = mysqli_query($mysqli, "SELECT * FROM users ORDER BY id ASC");
+while ($row=mysqli_fetch_assoc($result)) {
+    $users[] = $row;
+}
+mysqli_stmt_close($result);
+print_r($users);
+```
+
 > **Note:** If in a different folder, e.g. use `require_once 'class/db.php';` if **db.php** is in another folder named "**class**" within the same folder.
-
-### Creating another class file named "*user.php*"
-
-```php
-<?php
-class User extends DB {
-    function signup($name, $contact, $email) {
-        //insert with getting insert id
-        $stmt = $this->mysqli->prepare("INSERT INTO users(name, contact, email) VALUES ('$name', '$contact', '$email')");
-        $stmt->execute();
-        return $stmt->insert_id;
-        $stmt->close();
-    }
-```
-
-> **Note:** Other than `$this->mysqli`, using `$this->connect()` also works since **protected** functions and variables can be used inside other functions whether in the same class or extended. Refer to [this documentation](https://secure.php.net/manual/en/language.oop5.visibility.php) for more information.
-
-#### In other PHP files:
-
-```php
-<?php
-require_once 'db.php'
-require_once 'user.php'
-$inst = new User;
-//Function call
-$new_user = signup($name, $contact, $email);
-echo $new_user;
-```
-
-> **Note:** Here, you have to include **both** files for this to work. This method is used to put other functions outside of the shared **db.php** class file.
 
 ### Using the provided `mysqli()` function
 
@@ -74,30 +68,32 @@ This is based off of the code in [Mysqli made simple](https://phpdelusions.net/m
 ```php
 <?php
 require_once 'db.php';
-$db = new DB;
 
 // with 2 variables and 1 row returned
-$user = $db->mysqli("SELECT * FROM users WHERE name=? OR email=?", [$name, $email])->get_result()->fetch_row();
+$stmt = mysqli($mysqli, "SELECT * FROM users WHERE name=? OR email=?", [$name, $email]);
+$user = $stmt->get_result()->fetch_row();
+$stmt->close();
 print_r($user);
-$user = null;
 
 // with 1 variable and showing single value
-$user = $db->mysqli("SELECT * FROM users WHERE name=?", [$name])->get_result()->fetch_assoc();
+$stmt = mysqli($mysqli, "SELECT * FROM users WHERE name=?", [$name]);
+$user = $stmt->get_result()->fetch_assoc();
+$stmt->close();
 echo $user['name'];
-$user = null;
 
 // without variables and getting multiple rows
-$stmt = $db->mysqli("SELECT * FROM users ORDER BY id ASC");
-while ($row=$stmt->fetch_assoc()) {
+$result = mysqli($mysqli, "SELECT * FROM users ORDER BY id ASC");
+while ($row=$result->fetch_assoc()) {
     $users[] = $row;
 }
-$stmt->close();
+$result->close();
 print_r($users);
 
 //insert with getting insert id
-$ins_id = $db->mysqli("INSERT INTO users(name, contact, email) VALUES (?, ?, ?)", [$name, $contact, $email], "sis")->insert_id;
+$stmt = mysqli($mysqli, "INSERT INTO users(name, contact, email) VALUES (?, ?, ?)", [$name, $contact, $email], "sis");
+$ins_id = $stmt->insert_id;
+$stmt->close();
 echo $ins_id;
-$ins_id = null;
 ```
 
 > **Note:**
@@ -120,7 +116,7 @@ $ins_id = null;
 
 ```php
 //insert with getting insert id
-$stmt = $this->mysqli("INSERT INTO users(name, contact, email) VALUES (?, ?, ?)", array($name, $contact, $email), "sis");
+$stmt = mysqli($mysqli, "INSERT INTO users(name, contact, email) VALUES (?, ?, ?)", array($name, $contact, $email), "sis");
 $ins_id = $stmt->insert_id;
 $stmt->close();
 echo $ins_id;
