@@ -18,9 +18,9 @@ class DB {
 
     function mysqli($sql, $params = array(), $types = "") {
         if (!$params) {
-            $stmt = $this->mysqli->query($sql);
+            $stmt = $this->connect()->query($sql);
         } else {
-            $stmt = $this->mysqli->prepare($sql);
+            $stmt = $this->connect()->prepare($sql);
             if (!$types) $types = $types ?: str_repeat("s", count($params)); // Default to string if undefined.
             if (version_compare(PHP_VERSION, '5.6', '>=')) {
                 $stmt->bind_param($types, ...$params); // bind_param using spread operator.
