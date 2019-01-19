@@ -13,7 +13,7 @@ function pdo($pdo, $sql, $params = array()) {
     if (!$params) {
         $stmt = $pdo->query($sql);
     } else {
-        $stmt = $this->pdo->prepare($sql);
+        $stmt = $pdo->prepare($sql);
         if (!$types) {
             $stmt->execute($params);
         } else {
