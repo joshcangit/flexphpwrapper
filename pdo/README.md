@@ -175,7 +175,7 @@ $stmt = null;
 
 ```php
 //insert using positional parameters with getting insert id
-$stmt = $this->pdo("INSERT INTO customers(name, contact, email) VALUES (?, ?, ?)", array($name, $contact, $email);
+$stmt = $db->pdo("INSERT INTO customers(name, contact, email) VALUES (?, ?, ?)", array($name, $contact, $email);
 echo $stmt->lastInsertId;
 $stmt = null;
 ```
