@@ -25,9 +25,9 @@ class DB {
 
     function pdo($sql, $params = array()) {
         if (!$params) {
-            $stmt = $this->pdo->query($sql);
+            $stmt = $this->connect()->query($sql);
         } else {
-            $stmt = $this->pdo->prepare($sql);
+            $stmt = $this->connect()->prepare($sql);
             if (!$types) {
                 $stmt->execute($params);
             } else {
