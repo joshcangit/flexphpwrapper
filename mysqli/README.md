@@ -98,7 +98,9 @@ echo $ins_id;
 
 > **Note:**
 >
-> This function uses a `$params` **indexed/numeric array** to allow use of any amount of variables. This can **only** work with [prepared statements](https://secure.php.net/manual/en/mysqli.quickstart.prepared-statements.php) in **MySQLi** using **only** *positional placeholders* with the *?* symbol.
+> The `get_result()` function is needed if no variables are defined in the second argument of this `mysqli()` function.
+>
+> This `mysqli()` function uses a `$params` **indexed/numeric array** to allow use of any amount of variables. This can **only** work with [prepared statements](https://secure.php.net/manual/en/mysqli.quickstart.prepared-statements.php) in **MySQLi** using **only** *positional placeholders* with the *?* symbol.
 >
 > Using *positional parameters* require the values in the `$params` **indexed/numeric array** to be in the **same order** as the order of the columns defined in the query.
 >

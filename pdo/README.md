@@ -152,3 +152,7 @@ $stmt = pdo($pdo, "INSERT INTO users(name, contact, email) VALUES (?, ?, ?)", ar
 echo $stmt->lastInsertId;
 $stmt = null;
 ```
+
+### Backwards compatibility
+
+There are [`array()`](https://secure.php.net/manual/en/language.types.array.php#language.types.array.syntax.array-func) functions for compatibility with PHP before version [5.4](https://secure.php.net/migration54.new-features).
