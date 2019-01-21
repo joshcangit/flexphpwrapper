@@ -1,7 +1,7 @@
 <?php
 ini_set('display_errors', 1); // Turn on displaying errors.
 // data source name
-$dsn = "mysql:host=localhost";
+$dsn = "mysql:host=localhost;dbname=";
 $opt = array( // Options to modify PDO connection attributes
     PDO::ATTR_ERRMODE            => PDO::ERRMODE_EXCEPTION, //https://phpdelusions.net/pdo#errors
     PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC, //https://phpdelusions.net/pdo#fetch
