@@ -14,9 +14,7 @@ No need to use `die()` or `try-catch` in the code. The mode for error handling i
 
 Even so, [supported PHP versions](https://secure.php.net/supported-versions.php) have since moved beyond PHP 5.1 so it is recommended to upgrade as soon as possible.
 
-## db.php
-
-#### [view raw content](https://raw.githubusercontent.com/joshcangit/flexphpwrapper/oop/pdo/db.php)
+### [view db.php](https://github.com/joshcangit/flexphpwrapper/blob/oop/pdo/db.php)
 
 ## Usage
 
