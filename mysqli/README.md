@@ -10,6 +10,10 @@ The few lines right before the connection make sure errors are reported in the p
 
 Although this code *should* function in earlier versions of PHP, it is recommended to use [supported PHP versions](https://secure.php.net/supported-versions.php).
 
+## db.php
+
+#### [view raw content](https://raw.githubusercontent.com/joshcangit/flexphpwrapper/oop/mysqli/db.php)
+
 ## Usage
 
 ### Basic query examples
