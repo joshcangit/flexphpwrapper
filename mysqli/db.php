@@ -1,10 +1,10 @@
 <?php
 class DB {
-    private $hostname = "localhost"; // Check your MySQL configuration. It may be different.
-    private $username = "root"; // Should be different if database is owned by another user.
-    private $password = ""; // Password is blank by default on XAMPP.
-    private $database = ""; // If specified, allows you to perform queries without `database.table` format.
-                            // However, you can only perform queries on that database which is specified.
+    private $hostname = "localhost";
+    private $username = "root";
+    private $password = "";
+    private $database = "";
+
     function __construct() {
         $this->mysqli = $this->connect();
     }
