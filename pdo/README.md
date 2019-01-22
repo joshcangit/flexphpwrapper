@@ -106,7 +106,7 @@ require_once 'db.php'
 require_once 'user.php'
 $inst = new User;
 //Function call
-$new_user = signup($name, $contact, $email);
+$new_user = $inst->signup($name, $contact, $email);
 echo $new_user;
 ```
 

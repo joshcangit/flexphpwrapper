@@ -63,7 +63,7 @@ require_once 'db.php'
 require_once 'user.php'
 $inst = new User;
 //Function call
-$new_user = signup($name, $contact, $email);
+$new_user = $inst->signup($name, $contact, $email);
 echo $new_user;
 ```
 
@@ -124,7 +124,7 @@ $ins_id = null;
 
 ```php
 //insert with getting insert id
-$stmt = $this->mysqli("INSERT INTO users(name, contact, email) VALUES (?, ?, ?)", array($name, $contact, $email), "sis");
+$stmt = $db->mysqli("INSERT INTO users(name, contact, email) VALUES (?, ?, ?)", array($name, $contact, $email), "sis");
 $ins_id = $stmt->insert_id;
 $stmt->close();
 echo $ins_id;
