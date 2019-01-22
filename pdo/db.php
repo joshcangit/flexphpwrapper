@@ -16,7 +16,7 @@ class DB {
         $opt = array( // Options to modify PDO connection attributes
             PDO::ATTR_ERRMODE            => PDO::ERRMODE_EXCEPTION, //https://phpdelusions.net/pdo#errors
             PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC, //https://phpdelusions.net/pdo#fetch
-			PDO::ATTR_EMULATE_PREPARES   => TRUE //https://phpdelusions.net/pdo#emulation
+            PDO::ATTR_EMULATE_PREPARES   => TRUE //https://phpdelusions.net/pdo#emulation
         );
         $pdo = new PDO($dsn, $this->username, $this->password, $opt); // PDO connection.
         //$pdo->exec("SET NAMES utf8mb4"); // Optionally define charset for PHP <= 5.3.6
@@ -43,7 +43,7 @@ class DB {
                 $stmt->execute();
             }
         }
-		return $stmt;
+        return $stmt;
     }
 }
 ?>
