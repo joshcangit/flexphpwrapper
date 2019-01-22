@@ -13,7 +13,7 @@ class DB {
         ini_set('display_errors', 1); // Turn on displaying errors.
         // data source name
         $dsn = "mysql:host=".$this->hostname.";dbname=".$this->database; //This is where the charset variable is used.
-        $opt = array( // Options to modify PDO connection attributes
+        $opt = array( // Options to modify PDO connection attributes.
             PDO::ATTR_ERRMODE            => PDO::ERRMODE_EXCEPTION, //https://phpdelusions.net/pdo#errors
             PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC, //https://phpdelusions.net/pdo#fetch
 			PDO::ATTR_EMULATE_PREPARES   => TRUE //https://phpdelusions.net/pdo#emulation
