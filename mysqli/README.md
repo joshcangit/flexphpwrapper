@@ -37,7 +37,7 @@ $result->close();
 print_r($users);
 ```
 
-> **Note:** If in a different folder, e.g. use `require_once 'class/db.php';` if **db.php** is in another folder named "**class**" within the same folder.
+**Note:** If in a different folder, e.g. use `require_once 'class/db.php';` if **db.php** is in another folder named "**class**" within the same folder.
 
 ### Creating another class file named "*user.php*"
 
@@ -53,7 +53,7 @@ class User extends DB {
     }
 ```
 
-> **Note:** Other than `$this->mysqli`, using `$this->connect()` also works since **protected** functions and variables can be used inside other functions whether in the same class or extended. Refer to [this documentation](https://secure.php.net/manual/en/language.oop5.visibility.php) for more information.
+**Note:** Other than `$this->mysqli`, using `$this->connect()` also works since **protected** functions and variables can be used inside other functions whether in the same class or extended. Refer to [this documentation](https://secure.php.net/manual/en/language.oop5.visibility.php) for more information.
 
 #### In other PHP files:
 
@@ -67,7 +67,7 @@ $new_user = $inst->signup($name, $contact, $email);
 echo $new_user;
 ```
 
-> **Note:** Here, you have to include **both** files for this to work. This method is used to put other functions outside of the shared **db.php** class file.
+**Note:** Here, you have to include **both** files for this to work. This method is used to put other functions outside of the shared **db.php** class file.
 
 ### Using the provided `mysqli()` function
 
@@ -102,23 +102,30 @@ echo $ins_id;
 $ins_id = null;
 ```
 
-> **Note:**
->
-> The `get_result()` function is needed if no variables are defined in the second argument of this `mysqli()` function.
->
-> This `mysqli()` function uses a `$params` **indexed/numeric array** to allow use of any amount of variables. This can **only** work with [prepared statements](https://secure.php.net/manual/en/mysqli.quickstart.prepared-statements.php) in **MySQLi** using **only** *positional placeholders* with the *?* symbol.
->
-> Using *positional parameters* require the values in the `$params` **indexed/numeric array** to be in the **same order** as the order of the columns defined in the query.
->
-> The problem with doing this is **MySQLi** cannot execute arrays as is. Therefore, the `$types` string used for `bind_param()` is to be specified as shown at function call.
->
-> Each character of the `$types` string is to be any of the 4 specified in the [`bind_param()` PHP Documentation](https://secure.php.net/manual/en/mysqli-stmt.bind-param.php).
->
-> The **length**, *i.e.* `strlen()`, of the `$types` string needs to be the **equal to** the **number of values**, *i.e.* `count()`, of the `$params` array. The position of each character, *i.e.* `strpos()`, in the `$types` string corresponds to the position of each value, *i.e.* `array_search()`, in the `$params` array.
->
-> If the third argument of this `mysqli()` function, *i.e.* `$types`, is not defined, it will default to the type **s** as in *string* to bind each parameter which will only work if **all** of the parameters in the query are of the *string* data type such as **char**, **varchar** or **text**.
->
-> As of PHP 5.4 you can also use the short array syntax, which replaces `array()` with `[]`.
+**Note:**
+
+The `get_result()` function is needed if no variables are defined in the second argument of this `mysqli()` function.
+
+This `mysqli()` function uses a `$params` **indexed/numeric array** to allow use of any amount of variables. This can **only** work with [prepared statements](https://secure.php.net/manual/en/mysqli.quickstart.prepared-statements.php) in **MySQLi** using **only** *positional placeholders* with the *?* symbol.
+
+Using *positional parameters* require the values in the `$params` **indexed/numeric array** to be in the **same order** as the order of the columns defined in the query.
+
+[Binding parameters](https://secure.php.net/manual/en/mysqli-stmt.bind-param.php) is required as **MySQLi** cannot execute arrays as is.
+
+This `mysqli()` function automatically binds each variable in the `$params` array according to the data types below.
+
+| Character | Description                                                  |
+| --------- | ------------------------------------------------------------ |
+| i         | corresponding variable has type integer                      |
+| d         | corresponding variable has type double                       |
+| s         | corresponding variable has type string                       |
+| b         | corresponding variable is a blob and will be sent in packets |
+
+You can bind parameters manually by defining the third argument of this `mysqli()` function, *i.e.* `$types`. Each character of the `$types` string is to be any of the 4 character above.
+
+The **length**, *i.e.* `strlen()`, of the `$types` string needs to be the **equal to** the **number of values**, *i.e.* `count()`, of the `$params` array. The position of each character, *i.e.* `strpos()`, in the `$types` string corresponds to the position of each value, *i.e.* `array_search()`, in the `$params` array.
+
+As of PHP 5.4 you can also use the short array syntax, which replaces `array()` with `[]`.
 
 ##### Before PHP 5.4
 

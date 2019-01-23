@@ -66,21 +66,21 @@ echo $stmt->lastInsertId;
 $stmt = null;
 ```
 
-> **Note:**
->
-> If in a different folder, e.g. use `require_once 'class/db.php';` if **db.php** is in another folder named "**class**" within the same folder.
->
-> The examples above use [prepared statements](https://phpdelusions.net/pdo#prepared) so even with just **1** variable, an **array** is still needed on execution. **PDO** can also be used with the usual single quotes.
->
-> Using *named parameters* require an **associative array** whereas *positional parameters* simply require an **indexed/numeric array**.
->
-> Using *named parameters*, the elements in the **associative array** can be of **any order**.
->
-> Using *positional parameters* require the elements in the **indexed/numeric array** to be in the **same order** as the order of the columns defined in the query.
->
-> Unlike **MySQLi**, **PDO** does not use a `close()` function. Instead, variables are set to null.
->
-> Also unlike **MySQLi**, **PDO** it has a default fetch mode on connection, which is the *fetch associative array* mode in this case. It also has different functions for fetching data. Refer to [this guide on fetch modes](https://phpdelusions.net/pdo/fetch_modes) and [The PDOStatement class of the PHP documentation](https://secure.php.net/manual/en/class.pdostatement.php) for more information.
+**Note:**
+
+If in a different folder, e.g. use `require_once 'class/db.php';` if **db.php** is in another folder named "**class**" within the same folder.
+
+The examples above use [prepared statements](https://phpdelusions.net/pdo#prepared) so even with just **1** variable, an **array** is still needed on execution. **PDO** can also be used with the usual single quotes.
+
+Using *named parameters* require an **associative array** whereas *positional parameters* simply require an **indexed/numeric array**.
+
+Using *named parameters*, the elements in the **associative array** can be of **any order**.
+
+Using *positional parameters* require the elements in the **indexed/numeric array** to be in the **same order** as the order of the columns defined in the query.
+
+Unlike **MySQLi**, **PDO** does not use a `close()` function. Instead, variables are set to null.
+
+Also unlike **MySQLi**, **PDO** it has a default fetch mode on connection, which is the *fetch associative array* mode in this case. It also has different functions for fetching data. Refer to [this guide on fetch modes](https://phpdelusions.net/pdo/fetch_modes) and [The PDOStatement class of the PHP documentation](https://secure.php.net/manual/en/class.pdostatement.php) for more information.
 
 ### Creating another class file called "*user.php*"
 
@@ -96,7 +96,7 @@ class User extends DB {
     }
 ```
 
-> **Note:** Other than `$this->pdo`, using `$this->connect()` also works since **protected** functions and variables can be used inside other functions whether in the same class or extended. Refer to [this documentation](https://secure.php.net/manual/en/language.oop5.visibility.php) for more information.
+**Note:** Other than `$this->pdo`, using `$this->connect()` also works since **protected** functions and variables can be used inside other functions whether in the same class or extended. Refer to [this documentation](https://secure.php.net/manual/en/language.oop5.visibility.php) for more information.
 
 #### In other PHP files:
 
@@ -110,7 +110,7 @@ $new_user = $inst->signup($name, $contact, $email);
 echo $new_user;
 ```
 
-> **Note:** Here, you have to include **both** files for this to work. This method is used to put other functions outside of the shared **db.php** class file.
+**Note:** Here, you have to include **both** files for this to work. This method is used to put other functions outside of the shared **db.php** class file.
 
 ### Using the provided `pdo()` function
 
@@ -161,17 +161,27 @@ echo $stmt->lastInsertId;
 $stmt = null;
 ```
 
-> **Note:**
->
-> Unlike **MySQLi**, binding parameters is optional since **PDO** can already execute arrays.
->
-> If you choose to bind parameters, you can add a `$types` array as the third argument of this `pdo()` function with [**PDO::PARAM_*** constants](https://php.net/manual/en/pdo.constants.php) as its values.
->
-> Both arrays have to be of the **same number of values**, *i.e.* same exact `count()`. The position of each value, *i.e.* `strpos()`, in the `$types` array corresponds to the position of each value, *i.e.* `array_search()`, in the `$params` array.
->
-> If you simply define the third argument of this `pdo()` function instead as `true` (without quotes), then each parameter will be bound as string which will only work if **all** of the parameters in the query are of the *string* data type such as **char**, **varchar** or **text**.
->
-> As of PHP 5.4 you can also use the short array syntax, which replaces `array()` with `[]`.
+**Note:**
+
+Unlike **MySQLi**, binding parameters is optional since **PDO** can already execute arrays.
+
+If you choose to bind parameters, simply define the third argument of this `pdo()` function, *i.e.* `$types`, as `true` (without quotes) and parameters will be bound automatically.
+
+You can bind parameters manually by defining the third argument of this `pdo()` function, *i.e.* `$types`. Both arrays have to be of the **same number of elements**, *i.e.* same exact `count()`. The position of each element, *i.e.* `array_search()`, in the `$types` array corresponds to the position of each element, *i.e.* `array_search()`, in the `$params` array.
+
+Each element of the `$types` array is to be any of the constants below.
+
+| PDO Constant          | Description                                                  |
+| --------------------- | ------------------------------------------------------------ |
+| **`PDO::PARAM_BOOL`** | Represents a boolean data type.                              |
+| **`PDO::PARAM_NULL`** | Represents the SQL NULL data type.                           |
+| **`PDO::PARAM_INT`**  | Represents the SQL INTEGER data type.                        |
+| **`PDO::PARAM_STR`**  | Represents the SQL CHAR, VARCHAR, or other string data type. |
+| **`PDO::PARAM_LOB`**  | Represents the SQL [large object](https://secure.php.net/manual/en/pdo.lobs.php) data type. |
+
+> **Caution:** **PDO** uses class constants since PHP 5.1. Previous versions use global constants in the form **`PDO_PARAM_BOOL`**.
+
+As of PHP 5.4 you can also use the short array syntax, which replaces `array()` with `[]`.
 
 ##### Before PHP 5.4
 
@@ -185,3 +195,7 @@ $stmt = null;
 ### Backwards compatibility
 
 There are [`array()`](https://secure.php.net/manual/en/language.types.array.php#language.types.array.syntax.array-func) functions for compatibility with PHP before version [5.4](https://secure.php.net/migration54.new-features).
+
+## [alias.php](https://github.com/joshcangit/flexphpwrapper/blob/oop/pdo/alias.php)
+
+The **alias.php** file defines constants taking values from [**PDO** parameter constants](https://php.net/manual/en/pdo.constants.php) even before version 5.1 of PHP. Simply make sure it is in the same file location as **db.php** then uncomment the `include_once` line in the **db.php** file to use it.
