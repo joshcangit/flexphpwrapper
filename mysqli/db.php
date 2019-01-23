@@ -9,7 +9,19 @@ function mysqli($mysqli, $sql, $params = array(), $types = "") {
         return mysqli_query($mysqli, $sql);
     } else {
         $stmt = mysqli_prepare($mysqli, $sql);
-        if (!$types) $types = $types ?: str_repeat("s", count($params)); // Default to string if undefined.
+        if (strlen($types) < 1) {
+            foreach ($params as $key => $value) {
+                if (is_int($value)) {
+                    $types .= 'i';
+                } elseif (is_float($value)) {
+                    $types .= 'd';
+                } elseif (is_string($value)) {
+                    if (ctype_print($value)) {
+                        $types .= 's';
+                    } else $types .= 'b';
+                }
+            }
+        }
         if (version_compare(PHP_VERSION, '5.6', '>=')) {
             mysqli_stmt_bind_param($stmt, $types, ...$params); // bind_param using spread operator.
         } else {
