@@ -1,5 +1,5 @@
 <?php
-// include_once 'alias.php';
+// require_once 'alias.php';
 ini_set('display_errors', 1); // Turn on displaying errors.
 // data source name
 $dsn = "mysql:host=localhost;dbname=";
