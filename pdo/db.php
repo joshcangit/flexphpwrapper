@@ -1,4 +1,5 @@
 <?php
+// include_once 'alias.php';
 class DB {
     private $hostname = "localhost";
     private $username = "root";
