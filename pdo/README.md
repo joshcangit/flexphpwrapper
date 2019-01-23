@@ -171,4 +171,4 @@ There are [`array()`](https://secure.php.net/manual/en/language.types.array.php#
 
 ## [alias.php](https://github.com/joshcangit/flexphpwrapper/blob/classless/pdo/alias.php)
 
-The **alias.php** file defines constants taking values from [**PDO** parameter constants](https://php.net/manual/en/pdo.constants.php) even before version 5.1 of PHP. Simply make sure it is in the same file location as **db.php** then uncomment the `include_once` line in the **db.php** file to use it.
+The **alias.php** file defines constants taking values from [**PDO** parameter constants](https://php.net/manual/en/pdo.constants.php) even before version 5.1 of PHP. Simply make sure it is in the same file location as **db.php** then uncomment the `require_once` line in the **db.php** file to use it.
