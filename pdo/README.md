@@ -4,7 +4,7 @@ Object oriented PDO connection with multiple ways of performing queries.
 
 ## Introduction
 
-The connection is made using `new pdo()`. Check out this guide on [making a database connection](https://phpdelusions.net/pdo#dsn).
+The connection is made using [`new PDO()`](https://phpdelusions.net/pdo#dsn).
 
 No need to use `die()` or `try-catch` in the code. The mode for error handling is set using `PDO::ATTR_ERRMODE` while `ini_set('display_errors', 1);` enables errors to be displayed. For more explanation see this guide on [error handling in **PDO**](https://phpdelusions.net/pdo#errors).
 
