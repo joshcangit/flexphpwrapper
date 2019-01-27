@@ -1,9 +1,10 @@
 <?php
 // require_once 'alias.php';
+ini_set('display_errors', 1); // Turn on displaying errors.
 class DB extends PDO {
     private $dsn, $username, $password, $options;
 
-    function __construct($dsn, $username, $password, $options = array()) {
+    function __construct($dsn, $username = null, $password = null, $options = array()) {
         // Assign parameters' values to class variables.
         $this->dsn = $dsn; // data source name
         $this->username = $username;
@@ -15,7 +16,6 @@ class DB extends PDO {
             PDO::ATTR_EMULATE_PREPARES   => TRUE //https://phpdelusions.net/pdo#emulation
         ); }
         $this->options = $options;
-        ini_set('display_errors', 1); // Turn on displaying errors.
         parent::__construct($this->dsn, $this->username, $this->password, $this->options);
     }
 
