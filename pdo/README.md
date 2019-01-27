@@ -4,9 +4,9 @@ PDO connection using [Dependency Injection](https://phpdelusions.net/pdo/pdo_wra
 
 ## Introduction
 
-The connection is made with a Data Source Name using `new PDO()`.
+The class gives the connection method of `new PDO()` a different default connection options and a function.
 
-Each database driver uses its own Data Source Name.
+This is an example of a Data Source Name for **MySQL**.
 
 - [PDO_MYSQL DSN](https://phpdelusions.net/pdo#dsn)
 ```
@@ -108,7 +108,7 @@ Also unlike **MySQLi**, **PDO** it has a default fetch mode on connection, which
 
 ```php
 <?php
-class User {
+class User extends DB {
     private $db = null;
 
     function __construct($db) {
