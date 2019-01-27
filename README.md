@@ -1,6 +1,4 @@
 # flexphpwrapper
-Choose between the different branches for your style of coding in PHP.
+This is the **`di`** branch of PHP wrappers.
 
-Each branch has 2 wrappers, one for the **MySQLi** extension and the other for the **PDO** extension.
-
-https://joshcangit.github.io/flexphpwrapper/
+This version uses [Classes and Objects](https://secure.php.net/manual/en/language.oop5.php) and [Dependency Injection](https://phpdelusions.net/pdo/pdo_wrapper) for connecting to a database in PHP.
