@@ -90,7 +90,12 @@ class User extends DB {
     function signup($name, $contact, $email) {
         //insert with getting insert id
         $stmt = $this->pdo->prepare("INSERT INTO users(name, contact, email) VALUES (?, ?, ?)");
-        $stmt->execute();
+        $data = [
+            'email' => $email,
+            'name' => $name,
+            'contact' => $contact
+        ];
+        $stmt->execute($data);
         return $stmt->insert_id;
         $stmt->close();
     }
