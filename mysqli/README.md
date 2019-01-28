@@ -4,7 +4,7 @@ Object oriented MySQLi connection with multiple ways of performing queries.
 
 ## Introduction
 
-The connection is made using `new mysqli()` or  `mysqli_connect()`. Check out the examples on making a database connection with [`mysqli::__construct()`](https://secure.php.net/manual/en/mysqli.construct.php#refsect1-mysqli.construct-examples) in the PHP documentation.
+The connection is made using `new mysqli()`. Check out the examples on making a database connection with [`mysqli::__construct()`](https://secure.php.net/manual/en/mysqli.construct.php#refsect1-mysqli.construct-examples) in the PHP documentation.
 
 The few lines right before the connection make sure errors are reported in the page even without `die()` or `try-catch` in the code. No need at all to change any settings. This guide on [how to report errors in mysqli](https://phpdelusions.net/mysqli/error_reporting) at *phpdelusions.net* explains this.
 
