@@ -1,5 +1,6 @@
 <?php
 // require_once 'alias.php';
+ini_set('display_errors', 1); // Turn on displaying errors.
 class DB {
     private $hostname = "localhost";
     private $username = "root";
@@ -11,7 +12,6 @@ class DB {
     }
 
     protected function connect() {
-        ini_set('display_errors', 1); // Turn on displaying errors.
         // data source name
         $dsn = "mysql:host=".$this->hostname.";dbname=".$this->database; //This is where the charset variable is set using ";charset=".
         $opt = array( // Options to modify PDO connection attributes

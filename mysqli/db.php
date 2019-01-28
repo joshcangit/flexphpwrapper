@@ -1,4 +1,7 @@
 <?php
+ini_set('display_errors',1); // Turn on displaying errors.
+error_reporting(E_ALL); // Set error level.
+mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT); // Set report functions.
 class DB {
     private $hostname = "localhost";
     private $username = "root";
@@ -10,9 +13,6 @@ class DB {
     }
 
     protected function connect() {
-        ini_set('display_errors',1); // Turn on displaying errors.
-        error_reporting(E_ALL); // Set error level.
-        mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT); // Set report functions.
         return new mysqli($this->hostname,$this->username,$this->password,$this->database); // Database connection.
     }
 
