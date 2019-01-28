@@ -53,8 +53,6 @@ class User extends DB {
     }
 ```
 
-**Note:** Other than `$this->mysqli`, using `$this->connect()` also works since **protected** functions and variables can be used inside other functions whether in the same class or extended. Refer to [this documentation](https://secure.php.net/manual/en/language.oop5.visibility.php) for more information.
-
 #### In other PHP files:
 
 ```php

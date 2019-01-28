@@ -18,9 +18,9 @@ class DB {
 
     function mysqli($sql, $params = array(), $types = "") {
         if (!$params) {
-            $stmt = $this->connect()->query($sql);
+            $stmt = $this->mysqli->query($sql);
         } else {
-            $stmt = $this->connect()->prepare($sql);
+            $stmt = $this->mysqli->prepare($sql);
             if (strlen($types) < 1) {
                 foreach ($params as $key => $value) {
                     if (is_int($value)) {
