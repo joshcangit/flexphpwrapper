@@ -6,7 +6,7 @@ Classless MySQLi connection with multiple ways of performing queries.
 
 The connection is made using `new mysqli()` or  `mysqli_connect()`. Check out the examples on making a database connection with [`mysqli::__construct()`](https://secure.php.net/manual/en/mysqli.construct.php#refsect1-mysqli.construct-examples) in the PHP documentation.
 
-The few lines right before the connection make sure errors are reported in the page even without `die()` or `try-catch` in the code. No need at all to change any settings. This guide on [how to report errors in mysqli](https://phpdelusions.net/mysqli/error_reporting) at *phpdelusions.net* explains this.
+The 3 lines right before the connection make sure errors are reported in the page even without `die()` or `try-catch` in the code. No need at all to change any settings. This guide on [how to report errors in mysqli](https://phpdelusions.net/mysqli/error_reporting) at *phpdelusions.net* explains this.
 
 Although this code *should* function in earlier versions of PHP, it is recommended to use [supported PHP versions](https://secure.php.net/supported-versions.php).
 
